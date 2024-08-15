@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Log in{% endblock  %}
+
+
+{% block content %}
+    <div class="auth_block">
+        <div class="login_block">
+            <div class="login_block_header">
+                <span>Log in</span>
+            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="username_block">
+                    {{login_form.username}}
+                </div>
+                <div class="password_block">
+                    {{login_form.password}}
+                    <input type="checkbox" onclick="password_visibility">
+                </div>
+                <div class="remember_me">
+                    <span>Remember me</span>
+                    <input type="checkbox" name="" id="">
+                </div>
+                <div class="forgot_password">
+                    <span><a href="#">Forgot password</a></span>
+                </div>
+                <input type="submit" value="Log in">
+            </form>
+            <div class="login_block_horizontal_line">
+                <div class="line">
+                    <span></span>
+                </div>
+                <span>or</span>
+                <div class="line">
+                    <span></span>
+                </div>
+            </div>
+            <div class="social_auth_block">
+                <div class="google">
+                    <a href="#">Sing in with Google</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock  %}
+    
+    

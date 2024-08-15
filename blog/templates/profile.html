@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load tags %}
+
+{% block title %}Profile{% endblock  %}
+
+
+{% block content %}
+    <div class="personal_information_container">
+        <div class="images_container">
+            <div class="background_image">
+                {% thumbnail user.profile.personal_background 400x400 as bg %}
+                <img src="{{ bg.url }}" width="bg.width" height="bg.height" alt="background">
+            </div>
+            <div class="personal_photo">
+                {% thumbnail user.profile.personal_photo 200x200 as ph %}
+                <img src="{{ ph.url }}" alt="photo">
+            </div>
+        </div>
+        <div class="name_block">
+            <div class="name">
+                {% if user.first_name %}
+                    {% if user.last_name %}
+                        <span>{{ user.first_name}} {{ user.last_name }}</span>
+                    {% else %}
+                        <span>{{ user.first_name}}</span>
+                    {% endif %}    
+                {% else %}
+                    <span>{{user.username}}</span>
+                {% endif %}
+                    
+            </div>
+            <div class="username_block">
+                <span>@{{ user.username }}</span>
+            </div>
+        </div>
+        <div class="additional_information">
+            <div class="location">
+                <div class="location_logo">
+                    <img src="{% static 'icons/location.png' %}" alt="">
+                </div>
+                <div class="location_link">
+                    <span><a href="#">Location</a></span>
+                </div>
+            </div>
+            <div class="user_page">
+                <div class="user_page_logo">
+                    <img src="{% static 'icons/link.png' %}" alt="">
+                </div>
+                <div class="user_page_link">
+                    <span><a href="#">Page</a></span>
+                </div>
+            </div>
+            <div class="joined_date">
+                <div class="joined_date_logo">
+                    <img src="{% static 'icons/calendar.png' %}" alt="">
+                </div>
+                <div class="joined_date_date">
+                    <span>Joined date</span>
+                </div>
+            </div>
+        </div>
+        <div class="activity">
+            <siv class="posts">
+                <span>Posts</span>
+                <span>{% count_tag posts %}</span>
+            </siv>
+            <div class="followers">
+                <span>Followers</span>
+                <span>0</span>
+            </div>
+            <div class="following">
+                <span>Following</span>
+                <span>0</span>
+            </div>
+        </div>
+        <div class="profile_tools">
+            
+            {% if request.user == user %}
+                <div class="personal_tools">
+                    <div class="edit_profile">
+                        <a href="#">Edit profile</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="profile_actions_block">
+                    <div class="follow_block">
+                        <a href="#">Follow</a>
+                    </div>
+                    <div class="tools">
+                        <img src="{% static 'icons/tools.png' %}" alt="">
+                        <div class="dropdown">
+                            <div class="mute">
+                                <div class="mute_icon">
+                                    <img src="{% static 'icons/mute.png' %}" alt="">
+                                </div>
+                                <div class="mute">
+                                    <span>Mute</span>
+                                </div>
+                            </div>
+                            <div class="block">
+                                <div class="block_icon">
+                                    <img src="{% static 'icons/block.png' %}" alt="">
+                                </div>
+                                <div class="block">
+                                    <span>Block</span>
+                                </div>
+                            </div>
+                            <div class="report">
+                                <div class="repost_icon">
+                                    <img src="{% static 'icons/report.png' %}" alt="">
+                                </div>
+                                <div class="report">
+                                    <span>Report</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+                
+        </div>
+    </div>
+    
+    
+        
+    <div class="posts_container">
+        {% if user == request.user %}
+            <div class="post_form">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="title_post_field">
+                        {{ post_form.title }}
+                    </div>
+                    <div class="post_body">
+
+                        <textarea name="body" id="id_body" cols="40" rows="10" placeholder="What's happening?"></textarea>
+                    </div>
+                    <div class="post_sumbit_button">
+                        <input type="submit" value="Post">
+                    </div>
+                </form>
+            </div>        
+        {% endif %}
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post_block">
+                    <div class="post_header">
+                        <div class="post_creater_photo">
+                            {% thumbnail post.user.profile.personal_photo 75x75 as post_user_photo %}
+                            <img src="{{ post_user_photo.url }}" alt="">
+                        </div>
+                        <div class="post_creater_name">
+                            <span><a href="#">#{{user.username}}</a></span>
+                        </div>
+                        <div class="publish_date">
+                            <span>{{post.pub_date}}</span>
+                        </div>
+                        {% if request.user == user %}
+                            <div class="delete_button">
+                                <a href="{% url 'post_delete' pk=post.id %}">X</a>
+                            </div>    
+                        {% endif %}
+                    </div>
+                    <div class="post_title">
+                        <span>{{ post.title }}</span>
+                    </div>
+                    <div class="post_body">
+                        <p>{{ post.body }}</p>
+                    </div>
+                    <div class="post_activity">
+                        <div class="post_like">
+                            <span>Like</span>
+                        </div>
+                        <div class="post_dislike">
+                            <span>Dislake</span>
+                        </div>
+                        <div class="post_comment">
+                            <span>Comment</span>
+                        </div>
+                        <div class="post_repost">
+                            <span>Repost</span>
+                        </div>
+                        <div class="post_view">
+                            <span>View</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <span>No post to list</span>
+        {% endif %}
+            
+        
+            
+    </div>
+    
+{% endblock  %}
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        {{post_form}}
+        <input type="submit" value="Post it">
+    </form>

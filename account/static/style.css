@@ -1,0 +1,308 @@
+body{
+    background-color: rgb(57, 54, 70);
+}
+*{
+    color: aliceblue;
+}
+
+@media only screen and (min-width: 1200px){
+
+    body{
+        justify-content: center;
+        font-size: 18px;
+        border: 1px solid red;
+        width: 1200px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 400px 400px 400px;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "header header header"
+            "profile posts posts"
+            "footer footer footer";
+        
+        
+    }
+    
+
+    
+    /* header */
+    .header_container{
+        grid-area: header;
+        display: flex;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        background-color: rgb(48, 47, 54);
+        border: 1px solid red;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    .header_logo{
+        padding: 10px;
+        padding-right: 50px;
+    }
+    .header_logo span{
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .nav_bar{
+        display: flex;
+    }
+    .search_block{
+        margin-left: 30px;
+    }
+    .home_block, .notifacation_block, .dashboard_block, .search_block{
+        display: flex;
+        align-items: center;
+    }
+    .home_block span, .notifacation_block span, .dashboard_block span, .search_block span, .user_block span{
+        font-size: 20px;
+        padding: 10px;
+    }
+    .home_block span:hover, .notifacation_block span:hover, .dashboard_block span:hover, .search_block span:hover, .user_block span:hover{
+        background-color: rgb(79, 87, 94);
+        border-radius: 5px;
+    }
+    .user_block{
+        display: flex;
+        align-items: center;
+        margin-left: 400px;
+    }
+    .nav_bar_link{
+        text-decoration: none;
+        color: black;
+        
+    }
+
+
+
+    /* profile */
+    .personal_information_container{
+        grid-area: profile;
+        border: 1px solid green;
+    }
+    .name_block{
+        border: 1px solid rgb(180, 3, 142);
+        padding: 10px;
+        justify-content: end;
+    }
+    .name_block .name, .name_block .username_block{
+        width: 100%;
+        display: flex;
+        margin-bottom: 10px;
+    }
+    .name_block span, .username_block span{
+        margin-left: 190px;
+    }
+    .activity{
+        display: flex;
+        border: 1px solid yellow;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .posts, .followers, .following{
+        padding: 10px;
+    }
+    .images_container{
+        position: relative;
+    }
+    .personal_photo{
+        position: absolute;
+        top: 150px;
+        left: 30px;
+        width: fit-content;
+    }
+    .personal_photo img{
+        height: 150px;
+        width: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid rgb(57, 54, 70);
+        background-color: rgb(57, 54, 70);
+
+    }
+    .additional_information{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+        border:  1px solid blue;
+    }
+    .location{
+        display: flex;
+    }
+    .location_logo img, .user_page_logo img, .joined_date_logo img{
+        display: flex;
+        padding: 5px;
+        height: 25px;
+        width: 25px;
+    }
+    .location_link, .user_page_link, .joined_date_date{
+        display: flex;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .user_page{
+        display: flex;
+    }
+
+    .joined_date{
+        display: flex;
+    }
+
+    .personal_tools{
+        display: flex;
+        justify-content: end    ;
+    }
+    .edit_profile{
+        display: flex;
+        margin: 10px;
+    }
+    .edit_profile a{
+        text-decoration: none;
+        background-color: grey;
+        padding: 10px;
+        border-radius: 5px;  
+    }
+    .edit_profile a:hover{
+        background-color: rgb(107, 104, 104);
+    }
+
+    .profile_actions_block{
+        display: flex;
+        margin: 10px;
+        justify-content: space-between;
+        margin-top: 20px;
+        align-items: center;
+    }
+    .follow_block a{
+        text-decoration: none;
+        background-color: green;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .follow_block a:hover{
+        background-color: rgb(2, 105, 2);
+    }
+    .tools img{
+        display: inline-block;
+        width: 30px;
+        padding: 10px;
+        position: relative;
+    }
+    .tools img:hover {
+        background-color: gray;
+        border-radius: 20px;
+    }
+    .tools:hover .dropdown{
+        display: block;
+        position: absolute;
+        background-color: gray;
+        z-index: 1;
+    }
+    .tools .dropdown:hover .tools{
+        background-color: gray;
+    }
+
+    .dropdown:hover .tools{
+        background-color: gray;
+    }
+    .tools .dropdown{
+        display: none;
+    }
+
+
+    /*posts_container*/
+    .posts_container{
+        grid-area: posts;
+        border: 1px solid blue;
+        
+    }
+    .post_block{
+        background-color: rgb(39, 76, 109);
+        padding: 10px;
+        margin: 10px;
+        border-radius: 7px;
+    }
+    .post_block:hover{
+        background-color: rgb(49, 107, 158);
+    }
+    .post_header{
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid grey;
+        margin-bottom: 10px;
+    }
+    .post_creater_photo img{
+        height: 50px;
+        width: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .post_creater_name{
+        padding: 5px;
+        padding-left: 20px;
+    }
+    .publish_date{
+        padding-left: 20px;
+    }
+    .delete_button{
+        margin-left: 400px;
+    }
+    .delete_button a{
+        text-decoration: none;
+    }
+    .delete_button:hover{
+        background-color: rgb(79, 87, 94);
+    }
+
+    .post_activity{
+        display: flex;
+        justify-content: space-around;
+        border-top: 1px solid grey;
+        padding-top: 5px;
+    }
+
+    /*post form*/
+    .post_form{
+        grid-area: posts;
+        margin: 10px;
+        background-color: rgb(70, 67, 87);
+        padding: 10px;
+        
+    }
+    .title_post_field input{
+        background-color: rgb(47, 44, 65);
+        border-color: rgb(41, 39, 53);
+        height: 20px;
+        margin-bottom: 5px;
+        border: 0px;
+    }
+    .title_post_field input:active{
+        border-color: rgb(41, 39, 53);
+    }
+    .post_body textarea{
+        width: 100%;
+        height: 60px;
+        resize: none;
+        background-color: rgb(47, 44, 65);
+        border-color: rgb(41, 39, 53);
+    }
+
+    .post_sumbit_button{
+        display: flex;
+        justify-content: right;
+    }
+    .post_sumbit_button input{
+        background-color: rgb(33, 33, 180);
+        padding: 10px;
+        font-size: 16px;
+        width: 90px;
+        border-radius: 10px;
+        border: 0px;
+    }
+    .post_sumbit_button input:hover{
+        background-color: rgb(15, 15, 182);
+    }
+}

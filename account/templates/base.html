@@ -1,0 +1,44 @@
+{% load static %}
+{% load tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="header_container">
+        <div class="header_logo">
+            <span>Bloggy</span>
+        </div>
+        <div class="nav_bar">
+            <div class="home_block">
+                <a href="{% url 'profile_view' pk=request.user.id %}" class="nav_bar_link"><span>Home</span></a>
+            </div>
+            <div class="notifacation_block">
+                <a href="#" class="nav_bar_link"><span>Notifications</span></a>
+            </div>
+            <div class="dashboard_block">
+                <a href="{% url 'dashboard' %}" class="nav_bar_link"><span>Dashboard</span></a>
+            </div>
+            <div class="search_block">
+                <input type="search">
+            </div>
+            
+        </div>
+        <div class="user_block">
+            <a href="#" class="nav_bar_link"><span>User</span></a>
+        </div>
+    </div>
+    
+    {% block content %}
+        
+    {% endblock  %}
+        
+</body>
+</html>
