@@ -1,15 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Profile
 from .forms import RegistrationForm, LoginForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
 
 # Create your views here.
 
 def login_view(request):
     if request.user.is_authenticated:
-        pass
+        return redirect(reverse('dashboard'))
     else:
         if request.method == 'POST':
             form = LoginForm(request.POST)
@@ -21,7 +22,7 @@ def login_view(request):
                 if user is not None:
                     if user.is_active:
                         login(request, user)
-                        return HttpResponse('User was loged in')
+                        return redirect(reverse('dashboard'))
         elif request.method == 'GET':
             login_form = LoginForm()
             register_form = RegistrationForm()
@@ -29,7 +30,10 @@ def login_view(request):
                 'login_form': login_form,
                 'register_form': register_form})
 
-
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('login_view'))
+    
 
 def registration_view(request):
     if request.user.is_authenticated:

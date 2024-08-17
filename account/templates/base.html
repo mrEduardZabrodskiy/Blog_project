@@ -1,15 +1,29 @@
 {% load static %}
 {% load tags %}
+{% load thumbnail %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'js/main.js' %}"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+
     <title>{% block title %}{% endblock %}</title>
+    
+    {% block script %}
+        
+    {% endblock  %}
+        
 </head>
 <body>
     <div class="header_container">
@@ -17,22 +31,60 @@
             <span>Bloggy</span>
         </div>
         <div class="nav_bar">
-            <div class="home_block">
-                <a href="{% url 'profile_view' pk=request.user.id %}" class="nav_bar_link"><span>Home</span></a>
-            </div>
-            <div class="notifacation_block">
-                <a href="#" class="nav_bar_link"><span>Notifications</span></a>
-            </div>
-            <div class="dashboard_block">
-                <a href="{% url 'dashboard' %}" class="nav_bar_link"><span>Dashboard</span></a>
-            </div>
-            <div class="search_block">
-                <input type="search">
-            </div>
+            {% if request.user.is_authenticated %}
+                <div class="home_block">
+                    <a href="{% url 'profile_view' pk=request.user.id %}" class="nav_bar_link"><span>Home</span></a>
+                </div>
+                <div class="notifacation_block">
+                    <a href="{% url 'notifications_view' %}" class="nav_bar_link"><span>Notifications</span></a>
+                </div>
+                <div class="dashboard_block">
+                    <a href="{% url 'dashboard' %}" class="nav_bar_link"><span>Dashboard</span></a>
+                </div>
+                <div class="search_block">
+                    <input type="search">
+                </div>
+            {% endif %}
             
         </div>
         <div class="user_block">
-            <a href="#" class="nav_bar_link"><span>User</span></a>
+            {% if request.user.is_authenticated %}
+                <a href="#" class="nav_bar_link"><span id="user_header_icon_block">User</span></a>
+                <div class="dropdown">
+                    <div class="dropdown_item_block">
+                        <a href="{% url 'profile_view' pk=request.user.id %}">
+                            <div class="dropdown_item_block_image_block">
+                                <span class="material-symbols-rounded" >account_circle</span>
+                            </div>
+                            <div class="dropdown_item_block_text">
+                                <span class="dropdown_item_text">User</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dropdown_item_block">
+                        <a href="#">
+                            <div class="dropdown_item_block_image_block">
+                                <span class="material-symbols-rounded">settings</span>
+                            </div>
+                            <div class="dropdown_item_block_text">
+                                <span class="dropdown_item_text">Settings</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dropdown_item_block">
+                        <a href="{% url 'logout_view' %}">
+                            <div class="dropdown_item_block_image_block">
+                                <span class="material-symbols-rounded">logout</span>
+                            </div>
+                            <div class="dropdown_item_block_text">
+                                <span class="dropdown_item_text">Log out</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'login_view' %}" class="nav_bar_link"><span  id="user_header_icon_block">Login</span></a>
+            {% endif %}
         </div>
     </div>
     

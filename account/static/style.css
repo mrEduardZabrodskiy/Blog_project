@@ -2,7 +2,7 @@ body{
     background-color: rgb(57, 54, 70);
 }
 *{
-    color: aliceblue;
+    color: #fbfbf5;
 }
 
 @media only screen and (min-width: 1200px){
@@ -10,7 +10,6 @@ body{
     body{
         justify-content: center;
         font-size: 18px;
-        border: 1px solid red;
         width: 1200px;
         margin: auto;
         display: grid;
@@ -20,8 +19,6 @@ body{
             "header header header"
             "profile posts posts"
             "footer footer footer";
-        
-        
     }
     
 
@@ -33,7 +30,6 @@ body{
         margin-top: 10px;
         margin-bottom: 15px;
         background-color: rgb(48, 47, 54);
-        border: 1px solid red;
         position: sticky;
         top: 0;
         z-index: 100;
@@ -48,6 +44,7 @@ body{
     }
     .nav_bar{
         display: flex;
+        width: 50%;
     }
     .search_block{
         margin-left: 30px;
@@ -60,19 +57,79 @@ body{
         font-size: 20px;
         padding: 10px;
     }
-    .home_block span:hover, .notifacation_block span:hover, .dashboard_block span:hover, .search_block span:hover, .user_block span:hover{
+    .home_block span:hover, .notifacation_block span:hover, .dashboard_block span:hover, .search_block span:hover, #user_header_icon_block:hover{
         background-color: rgb(79, 87, 94);
         border-radius: 5px;
     }
     .user_block{
-        display: flex;
+        width: 60px;
+        display: inline-block;
         align-items: center;
-        margin-left: 400px;
+        position: relative;
+        margin-left: 300px;
     }
+    #user_header_icon_block{
+        display: inline-block;
+    }
+    .user_block .dropdown{
+        display: none;
+        background-color: rgb(79, 87, 94);
+        padding: 5px;
+        border-radius: 10px;
+        position: absolute;
+        z-index: 1;
+        right: 0;
+    }
+    .user_block:hover .dropdown{
+        display: block;
+        
+    };
+    .dropdown_item_block{
+        border-radius: 5px;
+    }
+    .dropdown_item_block a{
+        background-color: rgb(110, 107, 107);
+        border-radius: 5px;
+        display: flex;
+        text-decoration: none;
+        padding: 5px;
+        margin: 5px;
+    }
+    .dropdown_item_block a:hover{
+        background-color: gray;
+        border-radius: 5px;
+    }
+    .dropdown_item_block_image_block{
+        width: 40px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .dropdown_item_block_image_block img{
+        border-radius: 10px;
+        width: 25px;
+        height: 25px;
+    }
+    #dropdown_item_logo_user{
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+    }
+    .dropdown_item_block_text{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .user_block:hover #user_header_icon_block{
+        background-color: rgb(79, 87, 94);
+        border-radius: 5px;
+    }
+
+
     .nav_bar_link{
         text-decoration: none;
-        color: black;
-        
+        color: black;    
     }
 
 
@@ -80,10 +137,12 @@ body{
     /* profile */
     .personal_information_container{
         grid-area: profile;
-        border: 1px solid green;
+        background-color: rgb(70, 67, 87);
+        height: fit-content;
+        border-radius: 0 0 5px 5px;
+
     }
     .name_block{
-        border: 1px solid rgb(180, 3, 142);
         padding: 10px;
         justify-content: end;
     }
@@ -97,7 +156,6 @@ body{
     }
     .activity{
         display: flex;
-        border: 1px solid yellow;
         justify-content: space-around;
         margin-top: 20px;
     }
@@ -113,6 +171,9 @@ body{
         left: 30px;
         width: fit-content;
     }
+    .background_image img{
+        border-radius: 5px 5px 0 0;
+    }
     .personal_photo img{
         height: 150px;
         width: 150px;
@@ -126,7 +187,6 @@ body{
         margin-top: 20px;
         display: flex;
         justify-content: space-around;
-        border:  1px solid blue;
     }
     .location{
         display: flex;
@@ -216,13 +276,11 @@ body{
     /*posts_container*/
     .posts_container{
         grid-area: posts;
-        border: 1px solid blue;
-        
     }
     .post_block{
         background-color: rgb(39, 76, 109);
         padding: 10px;
-        margin: 10px;
+        margin: 0 0 10px 10px;
         border-radius: 7px;
     }
     .post_block:hover{
@@ -239,6 +297,7 @@ body{
         width: 50px;
         object-fit: cover;
         border-radius: 50%;
+        background-color: rgb(153, 146, 146);
     }
     .post_creater_name{
         padding: 5px;
@@ -249,12 +308,24 @@ body{
     }
     .delete_button{
         margin-left: 400px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        width: 25px;
+        height: 25px;
     }
     .delete_button a{
-        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .delete_button a img{
+        height: 20px;
+        width: 20px;
     }
     .delete_button:hover{
-        background-color: rgb(79, 87, 94);
+        background-color: rgb(36, 74, 107);
+        border-radius: 10px;
     }
 
     .post_activity{
@@ -263,12 +334,36 @@ body{
         border-top: 1px solid grey;
         padding-top: 5px;
     }
+    .post_activity_block{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .post_activity_block a{
+        height: fit-content;
+        width: fit-content;
+    }
+    .post_activity_block span{
+        width: 30px;
+        height: 30px;
+        padding: 5px
+    }
+    #activity_icon:hover{
+        color: rgb(162, 10, 192);
+    }
+    .post_activity_block span{
+        padding: 5px;
+    }
+
+    
+
 
     /*post form*/
     .post_form{
         grid-area: posts;
-        margin: 10px;
+        margin: 0 0 10px 10px;
         background-color: rgb(70, 67, 87);
+        border-radius: 5px;
         padding: 10px;
         
     }
@@ -305,4 +400,184 @@ body{
     .post_sumbit_button input:hover{
         background-color: rgb(15, 15, 182);
     }
+
+
+    /* dashboard */
+
+    .dashboard_container{
+        display: grid;
+        grid-template-columns: 400px 400px 400px;
+        grid-template-rows: auto;
+        grid-template-areas:
+            
+            "posts posts sidebar"
+            
+
+    }
+    .dashboard_post_container{
+        grid-area: posts;
+    }
+    .who_to_follow_container{
+        grid-area: sidebar;
+        background-color: rgb(70, 67, 87);
+        border-radius: 5px;
+        height: fit-content;
+        margin-left: 10px;
+    }
+    .who_to_follow_header_block{
+        font-size: 18px;
+        margin: 20px;
+        justify-content: center;
+        display: flex;
+        
+    }
+
+
+    .user_card_container{
+        display: block;
+    }
+    .user_card_main_block{
+        display: flex;
+    }
+    .user_card_block{
+        display: block;
+        background-color: rgb(39, 76, 109);
+        margin: 10px;
+        border-radius: 10px;
+        padding: 10px;
+        padding-top: 20px;
+    }
+    .user_card_block:hover{
+        background-color: rgb(49, 107, 158);
+    }
+    .user_photo_block{
+        display: flex;
+    }
+    .user_photo_block img{
+        height: 150px;
+        width: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: rgb(153, 146, 146);
+        
+    }
+    .user_card_name_block{
+        height: fit-content;
+        padding: 10px;
+        display: flex;
+    }
+    .user_card_name_container{
+        display: block;
+        margin-left: 10px;
+        margin-top: 30px;
+    }
+    .user_card_name_block span{
+        display: flex;
+    }
+    .user_card_username_block{
+        width: 150px;
+        padding: 10px;
+        display: flex;
+        height: fit-content;
+    }
+    .user_card_activity_block{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+    .user_card_post_block, .user_card_followers_block, .user_card_followings_block{
+        display: flex;
+    }
+    .user_card_post_block span, .user_card_followers_block span, .user_card_followings_block span{
+        margin: 5px;
+    }
+    .user_card_actions{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
+    .user_card_follow_button_block, .action_follow_block{
+        background-color: green;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .user_card_follow_button_block:hover, .action_follow_block:hover{
+        background-color: rgb(2, 105, 2);
+    }
+    .user_card_follow_button_block a, .action_follow_block a{
+        text-decoration: none;
+    }
+    .user_card_block_user_button{
+        display: flex;
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+        align-items: center;
+        justify-content: center;
+    }
+    .user_card_block_user_button a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .user_card_block_user_button a img{
+        width: 20px;
+        height: 20px;
+    }
+    .user_card_block_user_button:hover{
+        background-color: rgb(36, 74, 107);
+        border-radius: 10px;
+
+    }
+
+
+    /* notifications */
+
+    .actions_container{
+        grid-area: posts;
+        margin-left: 10px;
+    }
+    .action_block{
+        background-color: rgb(36, 74, 107);
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .action_user_block{
+        display: flex;
+        align-items: center;
+    }
+    .action_user_photo_block{
+        display: flex;
+        width: fit-content;
+    }
+    .action_user_photo_block img{
+        height: 100px;
+        width: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+    .action_user_name_container{
+        display: block;
+        margin-left: 20px;
+    }
+    .action_user_name_block span{
+        padding: 5px;
+    }
+    .action_action_container{
+        display: flex;
+        align-items: center;
+        padding: 5px;
+    }
+    .action_follow_block{
+        margin-left: 20px;
+    }
+    .action_date_block{
+        display: flex;
+        justify-content: end;
+    }
+
 }

@@ -5,6 +5,11 @@
 
 {% block title %}Profile{% endblock  %}
 
+{% block script %}
+    <script src="{% static 'js/follow.js' %}"></script>
+{% endblock  %}
+    
+
 
 {% block content %}
     <div class="personal_information_container">
@@ -38,7 +43,7 @@
         <div class="additional_information">
             <div class="location">
                 <div class="location_logo">
-                    <img src="{% static 'icons/location.png' %}" alt="">
+                    <span class="material-symbols-rounded">location_on</span>
                 </div>
                 <div class="location_link">
                     <span><a href="#">Location</a></span>
@@ -46,7 +51,7 @@
             </div>
             <div class="user_page">
                 <div class="user_page_logo">
-                    <img src="{% static 'icons/link.png' %}" alt="">
+                    <span class="material-symbols-rounded">link</span>
                 </div>
                 <div class="user_page_link">
                     <span><a href="#">Page</a></span>
@@ -54,10 +59,10 @@
             </div>
             <div class="joined_date">
                 <div class="joined_date_logo">
-                    <img src="{% static 'icons/calendar.png' %}" alt="">
+                    <span class="material-symbols-rounded">calendar_month</span>
                 </div>
                 <div class="joined_date_date">
-                    <span>Joined date</span>
+                    <span>{{ user.date_joined|date:"M. j, Y" }}</span>
                 </div>
             </div>
         </div>
@@ -66,13 +71,13 @@
                 <span>Posts</span>
                 <span>{% count_tag posts %}</span>
             </siv>
-            <div class="followers">
-                <span>Followers</span>
-                <span>0</span>
+            <div class="followers" id="followers">
+                <span id="followers_text">Followers</span>
+                <span id="followers_number">{% count_tag user.followers.all %}</span>
             </div>
-            <div class="following">
+            <div class="following" id="following">
                 <span>Following</span>
-                <span>0</span>
+                <span>{{ user.following.all.count }}</span>
             </div>
         </div>
         <div class="profile_tools">
@@ -86,30 +91,35 @@
             {% else %}
                 <div class="profile_actions_block">
                     <div class="follow_block">
-                        <a href="#">Follow</a>
+                        
+                        {% if request.user in user.followers.all %}
+                            <a href="#" data-action="unfollow" id="follow" data-id="{{ user.id }}" data-action="unfollow">Unfollow</a>
+                        {% else %}
+                            <a href="#" data-action="follow" id="follow" data-id="{{ user.id }}" data-action="follow">Follow</a>
+                        {% endif %}
                     </div>
                     <div class="tools">
-                        <img src="{% static 'icons/tools.png' %}" alt="">
+                        <span class="material-symbols-rounded">more_horiz</span>
                         <div class="dropdown">
                             <div class="mute">
-                                <div class="mute_icon">
-                                    <img src="{% static 'icons/mute.png' %}" alt="">
+                                <div class="activity_icon_block" id="mute_icon">
+                                    <span class="material-symbols-rounded">volume_off</span>
                                 </div>
                                 <div class="mute">
                                     <span>Mute</span>
                                 </div>
                             </div>
                             <div class="block">
-                                <div class="block_icon">
-                                    <img src="{% static 'icons/block.png' %}" alt="">
+                                <div class="activity_icon_block" id="block_icon">
+                                    <span class="material-symbols-rounded">block</span>
                                 </div>
                                 <div class="block">
                                     <span>Block</span>
                                 </div>
                             </div>
                             <div class="report">
-                                <div class="repost_icon">
-                                    <img src="{% static 'icons/report.png' %}" alt="">
+                                <div class="activity_icon_block" id="repost_icon">
+                                    <span class="material-symbols-rounded">flag</span>
                                 </div>
                                 <div class="report">
                                     <span>Report</span>
@@ -159,7 +169,7 @@
                         </div>
                         {% if request.user == user %}
                             <div class="delete_button">
-                                <a href="{% url 'post_delete' pk=post.id %}">X</a>
+                                <span class="material-symbols-rounded">close</span>
                             </div>    
                         {% endif %}
                     </div>
@@ -170,22 +180,36 @@
                         <p>{{ post.body }}</p>
                     </div>
                     <div class="post_activity">
-                        <div class="post_like">
-                            <span>Like</span>
+                        <div class="post_activity_block" id="post_like">
+                            <a href="#">
+                                <span id="activity_icon" class="material-symbols-rounded">thumb_up</span>
+                            </a>
+                            <span>0</span>
                         </div>
-                        <div class="post_dislike">
-                            <span>Dislake</span>
+                        <div class="post_activity_block" id="post_dislike">
+                            <a href="#">
+                                <span id="activity_icon" class="material-symbols-outlined">thumb_down</span>
+                            </a>
+                            <span>0</span>
                         </div>
-                        <div class="post_comment">
-                            <span>Comment</span>
+                        <div class="post_activity_block" id="post_comment">
+                            <a href="#">
+                                <span id="activity_icon" class="material-symbols-outlined">chat_bubble</span>
+                            </a>
+                            <span>0</span>
                         </div>
-                        <div class="post_repost">
-                            <span>Repost</span>
+                        <div class="post_activity_block" id="post_repost">
+                            <a href="#">
+                                <span id="activity_icon" class="material-symbols-outlined">repeat</span>
+                            </a>
+                            <span>0</span>
                         </div>
-                        <div class="post_view">
-                            <span>View</span>
+                        <div class="post_activity_block" id="post_view">
+                            <a href="#">
+                                <span id="activity_icon" class="material-symbols-outlined">analytics</span>
+                            </a>
+                            <span>0</span>
                         </div>
-                        
                     </div>
                 </div>
             {% endfor %}
@@ -198,9 +222,3 @@
     </div>
     
 {% endblock  %}
-    
-    <form action="" method="post">
-        {% csrf_token %}
-        {{post_form}}
-        <input type="submit" value="Post it">
-    </form>

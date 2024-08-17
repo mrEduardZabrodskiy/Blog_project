@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load tags %}
+
+{% block title %}Notifications{% endblock %}
+    
+
+
+{% block content %}
+    <div class="personal_information_container">
+        <div class="images_container">
+            <div class="background_image">
+                {% thumbnail user.profile.personal_background 400x400 as bg %}
+                <img src="{{ bg.url }}" width="bg.width" height="bg.height" alt="background">
+            </div>
+            <div class="personal_photo">
+                {% thumbnail user.profile.personal_photo 200x200 as ph %}
+                <img src="{{ ph.url }}" alt="photo">
+            </div>
+        </div>
+        <div class="name_block">
+            <div class="name">
+                {% if user.first_name %}
+                    {% if user.last_name %}
+                        <span>{{ user.first_name}} {{ user.last_name }}</span>
+                    {% else %}
+                        <span>{{ user.first_name}}</span>
+                    {% endif %}    
+                {% else %}
+                    <span>{{user.username}}</span>
+                {% endif %}
+                    
+            </div>
+            <div class="username_block">
+                <span>@{{ user.username }}</span>
+            </div>
+        </div>
+        <div class="additional_information">
+            <div class="location">
+                <div class="location_logo">
+                    <span class="material-symbols-rounded">location_on</span>
+                </div>
+                <div class="location_link">
+                    <span><a href="#">Location</a></span>
+                </div>
+            </div>
+            <div class="user_page">
+                <div class="user_page_logo">
+                    <span class="material-symbols-rounded">link</span>
+                </div>
+                <div class="user_page_link">
+                    <span><a href="#">Page</a></span>
+                </div>
+            </div>
+            <div class="joined_date">
+                <div class="joined_date_logo">
+                    <span class="material-symbols-rounded">calendar_month</span>
+                </div>
+                <div class="joined_date_date">
+                    <span>{{ user.date_joined|date:"M. j, Y" }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="activity">
+            <siv class="posts">
+                <span>Posts</span>
+                <span>{% count_tag posts %}</span>
+            </siv>
+            <div class="followers" id="followers">
+                <span id="followers_text">Followers</span>
+                <span id="followers_number">{% count_tag user.followers.all %}</span>
+            </div>
+            <div class="following" id="following">
+                <span id="following_text">Following</span>
+                <span id="following_number">{{ user.following.all.count }}</span>
+            </div>
+        </div>
+        <div class="profile_tools">
+            <div class="personal_tools">
+                <div class="edit_profile">
+                    <a href="#">Edit profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="actions_container">
+        
+        {% for action in actions %}
+            <div class="action_block">
+                <div class="action_user_block">
+                    <div class="action_user_photo_block">
+                        {% thumbnail action.user.profile.personal_photo 100x100 as ph%}
+                        <img class="action_user_photo" src="{{ ph.url }}" alt="">
+                    </div>
+                    <div class="action_user_name_container">
+                        <div class="action_user_name_block">
+                            <span>{{ action.user.first_name}} {{ action.user.last_name }} is follow you.</span>
+                        </div>
+                    </div>
+                    <div class="action_action_container">
+                        {% if request.user not in action.user.followers.all %}
+                            <div class="action_follow_block" id="div_follow"> <!--user_card_follow_button_block-->
+                                <a href="#" data-action="follow" id="follow" data-id="{{ action.user.id }}" data-action="follow">Follow Back</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+                <div class="action_date_block">
+                    <span>{{ action.created|date:"M. j, Y"}}</span>
+                </div>
+            </div>
+        {% endfor %}
+            
+    </div>
+        
+{% endblock  %}
+    

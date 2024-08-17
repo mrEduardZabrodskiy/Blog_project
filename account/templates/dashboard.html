@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load thumbnail %}
+{% load tags %}
 
 
 
@@ -8,7 +10,145 @@
 
 
 {% block content %}
+    <div class="dashboard_container">
+
     
+        <div class="dashboard_post_container">
+            
+            {% if posts %}
+                {% for post in posts %}
+                    <div class="post_block">
+                        <div class="post_header">
+                            <div class="post_creater_photo">
+                                {% thumbnail post.user.profile.personal_photo 75x75 as post_user_photo %}
+                                <img src="{{ post_user_photo.url }}" alt="">
+                            </div>
+                            <div class="post_creater_name">
+                                <span><a href="#">#{{user.username}}</a></span>
+                            </div>
+                            <div class="publish_date">
+                                <span>{{post.pub_date}}</span>
+                            </div>
+
+                        </div>
+                        <div class="post_title">
+                            <span>{{ post.title }}</span>
+                        </div>
+                        <div class="post_body">
+                            <p>{{ post.body }}</p>
+                        </div>
+                        <div class="post_activity">
+                            <div class="post_activity_block" id="post_like">
+                                <a href="#">
+                                    <span id="activity_icon" class="material-symbols-rounded">thumb_up</span>
+                                </a>
+                                <span>0</span>
+                            </div>
+                            <div class="post_activity_block" id="post_dislike">
+                                <a href="#">
+                                    <span id="activity_icon" class="material-symbols-outlined">thumb_down</span>
+                                </a>
+                                <span>0</span>
+                            </div>
+                            <div class="post_activity_block" id="post_comment">
+                                <a href="#">
+                                    <span id="activity_icon" class="material-symbols-outlined">chat_bubble</span>
+                                </a>
+                                <span>0</span>
+                            </div>
+                            <div class="post_activity_block" id="post_repost">
+                                <a href="#">
+                                    <span id="activity_icon" class="material-symbols-outlined">repeat</span>
+                                </a>
+                                <span>0</span>
+                            </div>
+                            <div class="post_activity_block" id="post_view">
+                                <a href="#">
+                                    <span id="activity_icon" class="material-symbols-outlined">analytics</span>
+                                </a>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <span>No post to list</span>
+            {% endif %}
+                
+        </div>
+        <div class="who_to_follow_container">
+            <div class="who_to_follow_header_block">
+                <span>Who to Follow</span>
+            </div>
+            <div class="user_card_container">
+                
+                {% for user in users %}
+                    <div class="user_card_block">
+                        <a href="{% url 'profile_view' pk=user.id %}">
+                            <div class="user_card_main_block">
+                                <div class="user_photo_block">
+                                    {% thumbnail user.profile.personal_photo 150x150 as ph%}
+                                    <img src="{{ ph.url}}" alt="">
+                                </div>
+                                <div class="user_card_name_container">
+                                    <div class="user_card_name_block">
+                                        <span>{{ user.first_name }} {{ user.last_name }}</span>
+                                    </div>
+                                    <div class="user_card_username_block">
+                                        <span>#{{ user.username }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="user_card_activity_block">
+                            <div class="user_card_post_block">
+                                {% count_tag user.posts as cp %}
+                                <span>{{ cp }}</span>
+                                {% if cp > 1 %}
+                                    <span>Posts</span>
+                                {% else %}
+                                    <span>Post</span>
+                                {% endif %}                                 
+                            </div>
+                            <div class="user_card_followers_block">
+                                {% count_tag user.followers as cf %}
+                                <span id="followers_number">{{ cf }}</span>
+                                {% if cf > 1 %}
+                                    <span id="followers_text">Followers</span>
+                                {% else %}
+                                    <span id="followers_text">Follower</span>
+                                {% endif %}
+                            </div>
+                            <div class="user_card_followings_block">
+                                {% count_tag user.following as cg %}
+                                <span>{{ cg }}</span>
+                                {% if cg > 1 %}
+                                    <span>Followings</span>
+                                {% else %}
+                                    <span>Following</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="user_card_actions">
+                            <div class="user_card_follow_button_block">
+                                {% if request.user in user.followers.all %}
+                                    <a href="#" data-action="unfollow" id="follow" data-id="{{ user.id }}" data-action="unfollow">Unfollow</a>
+                                {% else %}
+                                    <a href="#" data-action="follow" id="follow" data-id="{{ user.id }}" data-action="follow">Follow</a>
+                                {% endif %}
+                            </div>
+                            <div class="user_card_block_user_button">
+                                <span class="material-symbols-rounded">close</span>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+                    
+            </div>
+        </div>
+    </div>
+
 {% endblock  %}
     
     
